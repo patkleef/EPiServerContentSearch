@@ -1,0 +1,26 @@
+﻿.page-search {
+    overflow-y: scroll;
+    height: 600px; 
+}
+
+.page-search {
+    margin-left: 400px;
+}
+.page-search table.pagesTable { 
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+.page-search .pagesTable thead th {
+    font-weight: bold;
+}
+.page-search .pagesTable thead th, .page-search .pagesTable tbody td {
+    padding: 5px;
+}
+
+.page-search .pagesTable tr {
+    border-bottom: 1px solid #ddd;
+}
+
+.page-search a.showall-link, .page-search a.page-item-link {
+    text-decoration: underline !important;
+}
