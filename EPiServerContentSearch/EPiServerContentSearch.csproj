@@ -8,7 +8,7 @@
     </ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{155A4080-4CAD-4371-91C2-346D54824E3B}</ProjectGuid>
-    <ProjectTypeGuids>{E3E379DF-F4C6-4180-9B81-6769533ABE47};{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>EPiServerContentSearch</RootNamespace>
@@ -94,6 +94,24 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\EPiServer.Framework.8.0.0\lib\net45\EPiServer.Events.dll</HintPath>
     </Reference>
+    <Reference Include="EPiServer.Find">
+      <HintPath>..\packages\EPiServer.Find.9.2.0.2446\lib\net45\EPiServer.Find.dll</HintPath>
+    </Reference>
+    <Reference Include="EPiServer.Find.Cms">
+      <HintPath>..\packages\EPiServer.Find.Cms.9.2.0.2446\lib\net45\EPiServer.Find.Cms.dll</HintPath>
+    </Reference>
+    <Reference Include="EPiServer.Find.Framework">
+      <HintPath>..\packages\EPiServer.Find.Framework.9.2.0.2446\lib\net45\EPiServer.Find.Framework.dll</HintPath>
+    </Reference>
+    <Reference Include="EPiServer.Find.Optimizations">
+      <HintPath>..\packages\EPiServer.Find.Cms.9.2.0.2446\lib\net45\EPiServer.Find.Optimizations.dll</HintPath>
+    </Reference>
+    <Reference Include="EPiServer.Find.Statistics">
+      <HintPath>..\packages\EPiServer.Find.Cms.9.2.0.2446\lib\net45\EPiServer.Find.Statistics.dll</HintPath>
+    </Reference>
+    <Reference Include="EPiServer.Find.UI">
+      <HintPath>..\packages\EPiServer.Find.Cms.9.2.0.2446\lib\net45\EPiServer.Find.UI.dll</HintPath>
+    </Reference>
     <Reference Include="EPiServer.Framework, Version=8.0.0.0, Culture=neutral, PublicKeyToken=8fe83dea738b45b7, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\EPiServer.Framework.8.0.0\lib\net45\EPiServer.Framework.dll</HintPath>
@@ -173,6 +191,12 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\structuremap.2.6.4.1\lib\net40\StructureMap.dll</HintPath>
     </Reference>
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.0.0\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -186,6 +210,14 @@
     <Reference Include="System.Web.Helpers, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http, Version=5.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.0.0\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=5.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.0.0\lib\net45\System.Web.Http.WebHost.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
@@ -234,6 +266,15 @@
     <Compile Include="Business\Content\IContentSearchable.cs" />
     <Compile Include="Business\Content\Store\SearchPagesStore.cs" />
     <Compile Include="Business\Content\Tree\TreeChildrenQuery.cs" />
+    <Compile Include="Business\Search\Filter\CategoryNewsFacetFilterCategory.cs" />
+    <Compile Include="Business\Search\Filter\DateNewsFacetFilterCategory.cs" />
+    <Compile Include="Business\Search\Filter\FacetFilter.cs" />
+    <Compile Include="Business\Search\Filter\FacetFilterBuilder.cs" />
+    <Compile Include="Business\Search\Filter\FacetFilterCategory.cs" />
+    <Compile Include="Business\Search\Filter\SelectedFilter.cs" />
+    <Compile Include="Business\Search\SearchResult.cs" />
+    <Compile Include="Business\Search\SearchResultItem.cs" />
+    <Compile Include="Business\Search\SearchResultItemBuilder.cs" />
     <Compile Include="Controllers\DefaultPageController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

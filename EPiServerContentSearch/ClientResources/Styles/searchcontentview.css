@@ -8,7 +8,6 @@
 }
 .page-search table.pagesTable { 
     border-collapse: collapse;
-    margin-top: 20px;
 }
 .page-search .pagesTable thead th {
     font-weight: bold;
@@ -24,3 +23,23 @@
 .page-search a.showall-link, .page-search a.page-item-link {
     text-decoration: underline !important;
 }
+
+.result-container {
+    margin-top: 20px;
+}
+
+.filter-container {
+    width: 129px;
+    margin-right: 20px;
+    padding-top: 5px;
+}
+.filter-container .filter-category {
+    margin-bottom: 20px;
+}
+.filter-container .filter-category ul {
+    margin-top: 5px;
+}
+.result-list { vertical-align: top; }
+
+.active-filter { font-weight: bold;}
+.search-header { margin-left: 156px;}

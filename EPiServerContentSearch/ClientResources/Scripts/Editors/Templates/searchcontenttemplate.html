@@ -1,13 +1,20 @@
 ﻿<div id="container" class="page-search">
-    <h1>Search</h1>
-    <div class="dijitInline">
+
+
+    <div class="dijitInline search-header">
+        <h1>Search</h1>
         <div data-dojo-attach-point="stateNode, tooltipnode">
             <div data-dojo-attach-point="inputWidget" data-dojo-type="dijit.form.TextBox" style="width: 300px"></div>
-            <div class="dijitInline"><a data-dojo-attach-point="showAllLink" class="showall-link" href="#">Show all</a></div>
+            <div class="dijitInline"><a data-dojo-attach-point="showAllLink" class="showall-link" href="#">Show all</a>
+            </div>
         </div>
     </div>
-    <div>
-        <div class="dijitInline" data-dojo-attach-point="resultList">
+    <div class="result-container">
+        <div class="dijitInline filter-container" data-dojo-attach-point="facetsContainer">
+
+        </div>
+
+        <div class="dijitInline result-list" data-dojo-attach-point="resultList">
         </div>
     </div>
 </div>

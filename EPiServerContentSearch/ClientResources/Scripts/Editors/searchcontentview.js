@@ -5,7 +5,12 @@
      "dojo/when",
      "dojo/dom-construct",
      "dojo/_base/array",
+     "dojo/_base/lang",
      "dojo/query",
+     "dojo/dom-class",
+     "dojo/dom-attr",
+     "dojo/on",
+     "dojo/json",
      "dojo/text!./templates/searchcontenttemplate.html",
 
      "dijit/_Widget",
@@ -22,7 +27,12 @@
     when,
     domConstruct,
     array,
+    lang,
     query,
+    domClass,
+    domAttr,
+    on,
+    JSON,
     template,
 
     _Widget,
@@ -42,7 +52,7 @@
         contentStore: null,
         currentContentId: 1,
 
-        postCreate: function () {
+        postCreate: function() {
             this.tableNode = domConstruct.create("table", {
                 className: "pagesTable",
                 id: "pagesTable"
@@ -88,33 +98,100 @@
             var res = currentContext.id.split("_");
 
             this.currentContentId = res[0];
+
+            this._getResults();
         },
 
-        _clearTableBody: function() {
-            var tableBody = query("tbody", this.tableNode)[0];
-
-            domConstruct.empty(tableBody);
-        },
-
-        _onShowAllLinkClicked: function (event) {
+        _onShowAllLinkClicked: function(event) {
             event.preventDefault();
-            this._clearTableBody();
-            
-            dojo.when(this.store.query({id: this.currentContentId, value: "" }), this._buildRows);
+            this.inputWidget.value = "";
+            this._getResults();
         },
 
         // Event handler for the changed event of the input widget         
-        _onInputWidgetChanged: function (value) {
-            this._clearTableBody();
-
-            dojo.when(this.store.query({ id: this.currentContentId, value: value }), this._buildRows);
+        _onInputWidgetChanged: function(value) {
+            this._getResults();
         },
 
-        _buildRows: function (result) {
+        _filterClicked: function (e) {
+            query("li a", e.currentTarget.parentElement.parentElement).removeClass("active-filter");
+            domClass.toggle(e.currentTarget, "active-filter");
+
+            this._getResults();
+        },
+
+        _getResults: function() {
+            var selectedFilters = [];
+            query(".filter-category").forEach(function (filterCat) {
+                var filters = query("li a.active-filter", filterCat);
+                if (filters.length > 0) {
+                    filters.forEach(function (filter) {
+                        selectedFilters.push({ Id: filterCat.id, Value: dojo.attr(filter, "data-val") });
+                    });
+                }
+            });
+            dojo.when(this.store.query(
+            {
+                id: this.currentContentId,
+                value: this.inputWidget.value,
+                selectedFilters: JSON.stringify(selectedFilters)
+            }), lang.hitch(this, this._buildResult));
+        },
+
+        _buildResult: function (result) {
+            this._buildRows(result.items);
+            this._buildFilters(result.facets);
+        },
+
+        _buildFilters: function (filters) {
+            this._clearFilters();
+            var ulFilters = domConstruct.create("ul");
+
+            array.forEach(filters, function (item) {
+                var filterDiv = domConstruct.create("div", {
+                    className: "filter-category",
+                    id: item.id
+                });
+                var filterTitle = domConstruct.create("strong", {
+                    innerHTML: item.name
+                });
+
+                var ul = domConstruct.create("ul");
+
+                array.forEach(item.facets, function (filterItem) {
+                    var li = domConstruct.create("li");
+                    var a = domConstruct.create("a", {
+                        href: "#",
+                        'data-val': filterItem.value
+                    });
+                    if (filterItem.value == "-1") {
+                        a.innerHTML = filterItem.key;
+                    } else {
+                        a.innerHTML = filterItem.key + " (" + filterItem.count + ")";
+                    }
+                    if (item.selectedValue == filterItem.value || (filterItem.value == "-1" && item.selectedValue == "")) {
+                        a.className = "active-filter";
+                    }
+
+                    on(a, "click", lang.hitch(this, this._filterClicked));
+                    li.appendChild(a);
+                    ul.appendChild(li);
+                }, this);
+
+                filterDiv.appendChild(filterTitle);
+                filterDiv.appendChild(ul);
+
+                this.facetsContainer.appendChild(filterDiv);
+            }, this);
+        },
+
+        _buildRows: function (items) {
+            this._clearTableBody();
+
             var tableNode = dojo.byId("pagesTable");
             var tableBody = query("tbody", tableNode)[0];
 
-            array.forEach(result, function (item) {
+            array.forEach(items, function (item) {
                 var newRow = domConstruct.create("tr");
                 var pageColumn = domConstruct.create("td", {
                     innerHTML: "<a class='page-item-link' href='" + item.url + "'>" + item.name + "</a>"
@@ -132,6 +209,18 @@
 
                 tableBody.appendChild(newRow);
             }, this);
+        },
+
+        _clearTableBody: function() {
+            var tableBody = query("tbody", this.tableNode)[0];
+
+            domConstruct.empty(tableBody);
+        },
+
+        _clearFilters: function () {
+            var filterContainer = query(".filter-container")[0];
+
+            domConstruct.empty(filterContainer);
         }
     });
 });
